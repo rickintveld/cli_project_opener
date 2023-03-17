@@ -1,5 +1,6 @@
 # CLI project opener for VSCode
 
+- Make sure you installed the Shell command 'code' in PATH for VSCode.
 - `mv .env_dist .env`
 - Set your projects path in the .env file
 - Cargo build
