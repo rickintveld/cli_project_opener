@@ -1,10 +1,7 @@
-use dotenvy::dotenv;
 use inquire::{InquireError, Select};
 use std::{env, fs, process::Command};
 
 fn main() {
-    dotenv().ok();
-
     let project_dirs = project_dirs();
     let options: Vec<&str> = project_dirs.iter().map(|s| &**s).collect();
 
@@ -18,7 +15,13 @@ fn main() {
 }
 
 pub fn project_dirs() -> Vec<String> {
-    let project_path: String = env::var("PROJECTS_PATH").unwrap();
+    let project_dir_env = "PROJECTS_PATH";
+    match env::var(project_dir_env) {
+        Ok(v) => println!("{}: {}", project_dir_env, v),
+        Err(e) => panic!("${} is not set ({})", project_dir_env, e),
+    }
+
+    let project_path: String = env::var(project_dir_env).unwrap();
 
     println!("Reading projects from path: {}", project_path);
     let mut project_dirs = vec![String::from(""); 0];
